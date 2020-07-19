@@ -1,46 +1,45 @@
 class Josephu(object):
-    def __init__(self, people):
+    def __init__(self, people, start_num, step):
         self.people = []
-
+        self.start_num = start_num
+        self.step = step
     def append(self, person):
         self.people.append(person)
+        self.total_peson = len(people)
 
-    def pop(self, step, start_num, killed_num):
-        self.step = len(people)
-        self.start_num = int(input("the start number is:"))
-        self.killed_num = int(input("the killed number is:"))
+    def pop(self):
         assert isinstance(start_num,int)
-        assert isinstance(killed_num,int)
-        assert step>=start_num
-        x = killed_num%step
+        assert isinstance(step,int)
+        assert self.total_peson >= self.start_num
+        x = self.step % self.total_peson
         if x == 0:
-            y = killed_num+start_num
-            start_num = 0
-            if y>step:
-                y = y-step
+            y = self.step+self.start_num
+            self.start_num = 0
+            if y>self.total_peson:
+                y = y-self.total_peson-1
             else:
-                y = y
+                y = y-1
             list_former = people[y:]
             list_latter = people[:y]
             people = list_former+list_latter
         else:
-            z = x + start_num
-            start_num = 0
-            if z>step:
-                z = z-step
+            z = x + self.start_num
+            self.start_num = 0
+            if z>self.total_peson:
+                z = z-self.total_peson-1
             else:
-                z = z
+                z = z-1
             list_former = people[z:]
             list_latter = people[:z]
             people = list_former+list_latter
-        return people,start_num
+        return people,self.start_num
 
-    def traverse(self):    #只考虑了killed_num小于等于step的情况；第一次时，traverse的调用应在pop前。
+    def traverse(self):    #只考虑了step小于等于total_peson的情况；第一次时，traverse的调用应在pop前。
         list_traverse = []
         if start_num != 0:
-            m = start_num+killed_num
-            if m>step:
-                n = m-step-1
+            m = start_num+step
+            if m>total_peson:
+                n = m-total_peson-1
                 lsit_former = people[start_num:]
                 for i in list_former:
                     list_traverse_former = append(i)
@@ -53,7 +52,7 @@ class Josephu(object):
                 for i in list_whole:
                     list_traverse = append(i)
         else:
-            list_whole = people[:killed_num]
+            list_whole = people[:step]
             for i in list_whole:
                 list_traverse = append(i)
         return list_traverse       
